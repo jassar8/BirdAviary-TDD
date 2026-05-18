@@ -22,19 +22,24 @@ public partial class InventoryViewModel : BaseViewModel
 
     private void ApplyFilter()
     {
-        var birds = string.IsNullOrWhiteSpace(SearchQuery)
-            ? AppServices.BirdService.GetSortedByHatchYearDescending()
-            : AppServices.BirdService.SearchBirds(SearchQuery)
-                .OrderByDescending(b => b.HatchYear)
-                .ToList();
+        var birds = AppServices.BirdService.GetInventoryBirds(
+            string.IsNullOrWhiteSpace(SearchQuery) ? null : SearchQuery);
 
         Birds.Clear();
         foreach (var bird in birds)
             Birds.Add(bird);
 
         TotalCount = birds.Count;
-        ForSaleCount = birds.Count(b => b.AvailableForSale);
-        AvgAge = birds.Count > 0 ? Math.Round(birds.Average(b => b.Age), 1) : 0;
+        var forSale = 0;
+        var ageSum = 0;
+        foreach (var bird in birds)
+        {
+            if (bird.AvailableForSale) forSale++;
+            ageSum += bird.Age;
+        }
+
+        ForSaleCount = forSale;
+        AvgAge = birds.Count > 0 ? Math.Round((double)ageSum / birds.Count, 1) : 0;
     }
 
     [RelayCommand]

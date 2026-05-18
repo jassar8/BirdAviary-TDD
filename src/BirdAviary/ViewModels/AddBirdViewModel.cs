@@ -13,7 +13,7 @@ public partial class AddBirdViewModel : BaseViewModel
     [ObservableProperty] private BirdType _selectedType = BirdType.Cockatiel;
     [ObservableProperty] private string _colorMutation = string.Empty;
     [ObservableProperty] private string _hatchYearText = DateTime.Now.Year.ToString();
-    [ObservableProperty] private BirdStatus _selectedStatus = BirdStatus.Healthy;
+    [ObservableProperty] private BirdStatus _selectedStatus = BirdStatus.InAviary;
     [ObservableProperty] private bool _availableForSale;
     [ObservableProperty] private string _statusMessage = string.Empty;
     [ObservableProperty] private bool _isSuccess;
@@ -27,8 +27,9 @@ public partial class AddBirdViewModel : BaseViewModel
     {
         ValidationErrors.Clear();
         StatusMessage = string.Empty;
+        IsSuccess = false;
 
-        if (!int.TryParse(HatchYearText, out var hatchYear))
+        if (!int.TryParse(HatchYearText?.Trim(), out var hatchYear))
         {
             ValidationErrors.Add("Hatch year must be a valid number.");
             return;
@@ -36,36 +37,30 @@ public partial class AddBirdViewModel : BaseViewModel
 
         var bird = new Bird
         {
-            RingId = RingId.Trim(),
+            RingId = RingId?.Trim() ?? string.Empty,
             Type = SelectedType,
-            ColorMutation = ColorMutation.Trim(),
+            ColorMutation = ColorMutation?.Trim() ?? string.Empty,
             HatchYear = hatchYear,
             Status = SelectedStatus,
             AvailableForSale = AvailableForSale
         };
 
-        var validation = AppServices.BirdService.ValidateBird(bird);
-        if (!validation.IsValid)
+        var result = AppServices.BirdService.TryAddBird(bird);
+        if (!result.IsValid)
         {
-            foreach (var error in validation.Errors)
+            foreach (var error in result.Errors)
                 ValidationErrors.Add(error);
-            IsSuccess = false;
             StatusMessage = "Please fix validation errors.";
             return;
         }
 
-        try
-        {
-            AppServices.BirdService.AddBird(bird);
-            IsSuccess = true;
+        IsSuccess = true;
+        if (AvailableForSale && !bird.AvailableForSale)
+            StatusMessage = $"Bird {bird.RingId} added. Health check did not approve sale listing.";
+        else
             StatusMessage = $"Bird {bird.RingId} added successfully!";
-            ClearForm();
-        }
-        catch (Exception ex)
-        {
-            IsSuccess = false;
-            StatusMessage = ex.Message;
-        }
+
+        ClearForm();
     }
 
     [RelayCommand]
@@ -75,8 +70,9 @@ public partial class AddBirdViewModel : BaseViewModel
         ColorMutation = string.Empty;
         HatchYearText = DateTime.Now.Year.ToString();
         SelectedType = BirdType.Cockatiel;
-        SelectedStatus = BirdStatus.Healthy;
+        SelectedStatus = BirdStatus.InAviary;
         AvailableForSale = false;
         ValidationErrors.Clear();
+        StatusMessage = string.Empty;
     }
 }

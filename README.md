@@ -1,81 +1,76 @@
 # Bird Aviary Management System
 
-A modern desktop application for managing a bird aviary, built with **C# WPF**, **MVVM architecture**, and **Test-Driven Development (TDD)**.
+Professional C# WPF desktop application for bird aviary management, built with **MVVM**, **TDD**, **NUnit**, and **Moq**.
 
-## Features
-
-| Page | Description |
-|------|-------------|
-| **Dashboard** | Total birds, sale count, average age, isolation count, activity feed, type distribution chart |
-| **Add Bird** | Register birds with validation (Ring ID, type, color, hatch year, status) |
-| **Bulk Load** | Generate 10,000 random birds with progress bar and performance timer |
-| **Inventory Report** | Sortable DataGrid, search/filter, statistics panel, export UI |
-| **TDD Testing** | In-app test runner, pass/fail counters, Moq simulation, sorting benchmarks |
-
-## Architecture
+## Solution structure
 
 ```
 BirdAviary-TDD/
 ├── src/
-│   ├── BirdAviary.Core/          # Business logic (no UI dependencies)
+│   ├── BirdAviary.Core/
 │   │   ├── Enums/
-│   │   ├── Interfaces/
+│   │   ├── Helpers/          # ValidationHelper
+│   │   ├── Interfaces/       # IBirdService, IHealthService, ISortingService, …
 │   │   ├── Models/
-│   │   ├── Services/
-│   │   └── Sorting/              # Bubble Sort → Merge Sort refactor
-│   └── BirdAviary/               # WPF presentation layer
+│   │   ├── Services/         # BirdService, HealthService, BirdRepository, …
+│   │   └── Sorting/          # MergeSortService (+ commented Bubble Sort), BubbleSortService
+│   └── BirdAviary/
 │       ├── Converters/
-│       ├── Themes/               # Dark mode UI
+│       ├── Helpers/
+│       ├── Services/         # AppServices (composition root)
+│       ├── Themes/
 │       ├── ViewModels/
 │       └── Views/
 └── tests/
-    └── BirdAviary.Tests/         # NUnit + Moq
+    └── BirdAviaryManagement.Tests/   # NUnit + Moq
 ```
 
-## Tech Stack
+## Features
 
-- **.NET 9** — WPF desktop app
-- **MVVM** — CommunityToolkit.Mvvm
-- **NUnit** — Unit testing framework
-- **Moq** — Mocking dependencies in tests
-- **Bubble Sort / Merge Sort** — Sorting algorithm comparison for TDD coursework
+| Page | Capabilities |
+|------|----------------|
+| **Dashboard** | Total birds, for sale, average age, isolation count, activity feed, type chart |
+| **Add Bird** | Unique ring ID, 5+ types, English/Hebrew color letters only, hatch year, status (In Aviary / Sold / Isolation), health-gated sale |
+| **Bulk Load** | 10,000 birds, progress bar, execution timer |
+| **Inventory** | Merge-sorted by hatch year (desc), search/filter, stats panel, modern DataGrid |
+| **TDD Testing** | In-app runner, Moq health simulation, Bubble vs Merge benchmark |
 
-## Getting Started
+## TDD & architecture highlights
 
-### Prerequisites
+- **IHealthService** — `IsBirdHealthy(ringId)`; real impl is random; Moq tests verify sale only when approved
+- **Sorting** — Custom **Merge Sort** (in-place, no `OrderBy`/`Sort`); legacy **Bubble Sort** kept as comments in `MergeSortService.cs` and as `BubbleSortService` for benchmarks
+- **10,000 records** — Bulk load + sort performance test asserts completion **under 9 seconds**
+- **Validation** — Ring ID uniqueness, hatch year range, color letters only (`\p{L}` + Hebrew)
 
-- [.NET 9 SDK](https://dotnet.microsoft.com/download)
+## Run
 
-### Run the Application
-
+**From source:**
 ```bash
 dotnet run --project src/BirdAviary/BirdAviary.csproj
-```
-
-### Run Tests
-
-```bash
 dotnet test
 ```
 
-## TDD Workflow
+**Published EXE (for submission/demo):**
+```bash
+dotnet publish src/BirdAviary/BirdAviary.csproj -c Release -r win-x64 --self-contained false /p:PublishSingleFile=true -o publish
+```
+Then double-click `publish/BirdAviary.exe` (requires .NET 9 runtime on the machine).
 
-Tests are organized by layer:
+## Test project: BirdAviaryManagement.Tests
 
-- `BirdServiceTests` — Validation, CRUD, dashboard stats (with Moq mocks)
-- `BubbleSortServiceTests` — Initial O(n²) sorting implementation
-- `MergeSortServiceTests` — Refactored O(n log n) implementation + performance comparison
-- `BirdRepositoryTests` — Data persistence
+All tests are in one teacher-friendly file: `tests/BirdAviaryManagement.Tests/BirdAviarySystemTests.cs`
 
-The in-app **TDD Testing** page runs a built-in test suite and benchmarks both sorting algorithms side-by-side.
+| Test | Coverage |
+|------|----------|
+| Add bird successfully | ✓ |
+| Reject duplicate ring ID | ✓ |
+| Reject invalid hatch year | ✓ |
+| Reject invalid color text | ✓ |
+| Average age calculation | ✓ |
+| Sort returns / preserves count / descending order | ✓ |
+| Bulk load 10,000 birds | ✓ |
+| Health service approved / denied (Moq) | ✓ |
 
-## UI Design
+## Tech stack
 
-- Dark mode inspired by Visual Studio / JetBrains Rider
-- Glassmorphism cards with soft shadows
-- Rounded corners and smooth hover states
-- Soft blue accent palette on dark gray backgrounds
-
-## License
-
-University software engineering project — TDD & software quality focus.
+.NET 9 · WPF · CommunityToolkit.Mvvm · NUnit · Moq

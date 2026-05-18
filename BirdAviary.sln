@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BirdAviary.Core", "src\Bird
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BirdAviary", "src\BirdAviary\BirdAviary.csproj", "{C8CB5FD7-AAC1-46F6-BD15-9DA52BF8504C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BirdAviary.Tests", "tests\BirdAviary.Tests\BirdAviary.Tests.csproj", "{851889CC-388D-496F-8E0F-78A73AF10BCE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BirdAviaryManagement.Tests", "tests\BirdAviaryManagement.Tests\BirdAviaryManagement.Tests.csproj", "{851889CC-388D-496F-8E0F-78A73AF10BCE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

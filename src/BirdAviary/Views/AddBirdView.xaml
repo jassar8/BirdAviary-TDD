@@ -20,7 +20,10 @@
                           SelectedItem="{Binding SelectedType}"
                           Style="{StaticResource ModernComboBox}" Margin="0,0,0,16"/>
 
-                <TextBlock Text="Color / Mutation" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6"/>
+                <TextBlock Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6">
+                    <Run Text="Color / Mutation"/>
+                    <Run Text=" (English or Hebrew letters only)" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}"/>
+                </TextBlock>
                 <TextBox Text="{Binding ColorMutation, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource ModernTextBox}" Margin="0,0,0,16"/>
 

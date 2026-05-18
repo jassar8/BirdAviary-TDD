@@ -9,6 +9,8 @@
             </ResourceDictionary.MergedDictionaries>
             <conv:PassFailIconConverter x:Key="PassFailIcon"
                 xmlns:conv="clr-namespace:BirdAviary.Converters"/>
+            <conv:BirdStatusDisplayConverter x:Key="BirdStatusDisplay"
+                xmlns:conv="clr-namespace:BirdAviary.Converters"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

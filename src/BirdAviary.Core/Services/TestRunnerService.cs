@@ -28,6 +28,7 @@ public class TestRunnerService : ITestRunnerService
         results.Add(RunTest("BubbleSort_SortsDescending", TestBubbleSort));
         results.Add(RunTest("MergeSort_SortsDescending", TestMergeSort));
         results.Add(RunTest("SearchBirds_FiltersByQuery", TestSearch));
+        results.Add(RunTest("Sort_PreservesRecordCount", TestSortCount));
         return results;
     }
 
@@ -73,11 +74,11 @@ public class TestRunnerService : ITestRunnerService
     {
         var repo = new BirdRepository();
         var activity = new ActivityService();
-        var mergeSort = new MergeSortService();
-        var service = new BirdService(repo, activity, mergeSort);
+        var health = new HealthService();
+        var service = new BirdService(repo, activity, new MergeSortService(), health);
 
         var bird = new Bird { RingId = "TEST-001", ColorMutation = "Lutino", HatchYear = 2020 };
-        service.AddBird(bird);
+        service.TryAddBird(bird);
 
         var duplicate = new Bird { RingId = "TEST-001", ColorMutation = "Pied", HatchYear = 2021 };
         var result = service.ValidateBird(duplicate);
@@ -107,7 +108,7 @@ public class TestRunnerService : ITestRunnerService
             HatchYear = 2023,
             Type = BirdType.Finch
         };
-        _birdService.AddBird(bird);
+        _birdService.TryAddBird(bird);
         return _repository.Count == before + 1 ? null : "Bird was not added";
     }
 
@@ -149,5 +150,12 @@ public class TestRunnerService : ITestRunnerService
     {
         var results = _birdService.SearchBirds("BULK");
         return results is not null ? null : "Search returned null";
+    }
+
+    private string? TestSortCount()
+    {
+        var all = _birdService.GetAllBirds();
+        var sorted = _birdService.GetSortedByHatchYearDescending();
+        return sorted.Count == all.Count ? null : "Sort lost records";
     }
 }

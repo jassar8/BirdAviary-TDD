@@ -16,7 +16,7 @@
             </Grid.ColumnDefinitions>
             <TextBox Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}"
                      Style="{StaticResource ModernTextBox}"
-                     Tag="Search by Ring ID, type, or color..."/>
+                     ToolTip="Search by Ring ID, type, or color"/>
             <Button Grid.Column="1" Content="📤 Export" Command="{Binding ExportCommand}"
                     Style="{StaticResource PrimaryButton}" Margin="12,0,0,0"/>
         </Grid>
@@ -52,7 +52,7 @@
                     <DataGridTextColumn Header="Color" Binding="{Binding ColorMutation}" Width="*"/>
                     <DataGridTextColumn Header="Hatch Year" Binding="{Binding HatchYear}" Width="100"/>
                     <DataGridTextColumn Header="Age" Binding="{Binding Age}" Width="60"/>
-                    <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="100"/>
+                    <DataGridTextColumn Header="Status" Binding="{Binding Status, Converter={StaticResource BirdStatusDisplay}}" Width="110"/>
                     <DataGridCheckBoxColumn Header="For Sale" Binding="{Binding AvailableForSale}" Width="80"/>
                 </DataGrid.Columns>
             </DataGrid>
