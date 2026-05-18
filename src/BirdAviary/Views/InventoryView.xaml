@@ -1,0 +1,64 @@
+<UserControl x:Class="BirdAviary.Views.InventoryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Search & Export -->
+        <Grid Margin="0,0,0,16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}"
+                     Style="{StaticResource ModernTextBox}"
+                     Tag="Search by Ring ID, type, or color..."/>
+            <Button Grid.Column="1" Content="📤 Export" Command="{Binding ExportCommand}"
+                    Style="{StaticResource PrimaryButton}" Margin="12,0,0,0"/>
+        </Grid>
+
+        <!-- Stats Panel -->
+        <UniformGrid Grid.Row="1" Columns="3" Margin="0,0,0,16">
+            <Border Style="{StaticResource GlassCard}" Margin="0,0,8,0" Padding="16">
+                <StackPanel>
+                    <TextBlock Text="Total Records" Style="{StaticResource StatTitle}"/>
+                    <TextBlock Text="{Binding TotalCount, StringFormat=N0}" Style="{StaticResource StatValue}" FontSize="22"/>
+                </StackPanel>
+            </Border>
+            <Border Style="{StaticResource GlassCard}" Margin="0,0,8,0" Padding="16">
+                <StackPanel>
+                    <TextBlock Text="For Sale" Style="{StaticResource StatTitle}"/>
+                    <TextBlock Text="{Binding ForSaleCount, StringFormat=N0}" Style="{StaticResource StatValue}" FontSize="22"/>
+                </StackPanel>
+            </Border>
+            <Border Style="{StaticResource GlassCard}" Padding="16">
+                <StackPanel>
+                    <TextBlock Text="Average Age" Style="{StaticResource StatTitle}"/>
+                    <TextBlock Text="{Binding AvgAge}" Style="{StaticResource StatValue}" FontSize="22"/>
+                </StackPanel>
+            </Border>
+        </UniformGrid>
+
+        <!-- DataGrid -->
+        <Border Grid.Row="2" Style="{StaticResource GlassCard}" Padding="0">
+            <DataGrid ItemsSource="{Binding Birds}" Style="{StaticResource ModernDataGrid}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Ring ID" Binding="{Binding RingId}" Width="130"/>
+                    <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="100"/>
+                    <DataGridTextColumn Header="Color" Binding="{Binding ColorMutation}" Width="*"/>
+                    <DataGridTextColumn Header="Hatch Year" Binding="{Binding HatchYear}" Width="100"/>
+                    <DataGridTextColumn Header="Age" Binding="{Binding Age}" Width="60"/>
+                    <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="100"/>
+                    <DataGridCheckBoxColumn Header="For Sale" Binding="{Binding AvailableForSale}" Width="80"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+
+        <TextBlock Grid.Row="2" Text="{Binding ExportStatus}" VerticalAlignment="Bottom"
+                   Foreground="{StaticResource TextSecondaryBrush}" FontSize="11" Margin="16"/>
+    </Grid>
+</UserControl>

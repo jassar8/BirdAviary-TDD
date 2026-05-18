@@ -1,0 +1,112 @@
+﻿<Window x:Class="BirdAviary.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:BirdAviary.ViewModels"
+        xmlns:views="clr-namespace:BirdAviary.Views"
+        Title="Bird Aviary Management System"
+        Height="800" Width="1280"
+        MinHeight="600" MinWidth="1000"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource BgDarkBrush}">
+
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type vm:DashboardViewModel}">
+            <views:DashboardView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AddBirdViewModel}">
+            <views:AddBirdView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:BulkLoadViewModel}">
+            <views:BulkLoadView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:InventoryViewModel}">
+            <views:InventoryView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:TddTestingViewModel}">
+            <views:TddTestingView/>
+        </DataTemplate>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="240"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Sidebar -->
+        <Border Grid.Column="0" Background="{StaticResource BgSidebarBrush}"
+                BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,1,0">
+            <DockPanel>
+                <!-- Logo -->
+                <StackPanel DockPanel.Dock="Top" Margin="20,24,20,32">
+                    <TextBlock Text="🦜" FontSize="32" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Bird Aviary" Foreground="{StaticResource TextPrimaryBrush}"
+                               FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,8,0,0"/>
+                    <TextBlock Text="Management System" Foreground="{StaticResource TextSecondaryBrush}"
+                               FontSize="11" HorizontalAlignment="Center"/>
+                </StackPanel>
+
+                <!-- Navigation -->
+                <StackPanel Margin="12,0">
+                    <Button Style="{StaticResource NavButton}" Command="{Binding NavigateCommand}" CommandParameter="Dashboard">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="📊" Margin="0,0,10,0"/>
+                            <TextBlock Text="Dashboard"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource NavButton}" Command="{Binding NavigateCommand}" CommandParameter="AddBird">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="➕" Margin="0,0,10,0"/>
+                            <TextBlock Text="Add Bird"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource NavButton}" Command="{Binding NavigateCommand}" CommandParameter="BulkLoad">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="📦" Margin="0,0,10,0"/>
+                            <TextBlock Text="Bulk Load"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource NavButton}" Command="{Binding NavigateCommand}" CommandParameter="Inventory">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="📋" Margin="0,0,10,0"/>
+                            <TextBlock Text="Inventory"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource NavButton}" Command="{Binding NavigateCommand}" CommandParameter="TddTesting">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="🧪" Margin="0,0,10,0"/>
+                            <TextBlock Text="TDD Testing"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <!-- Footer -->
+                <Border DockPanel.Dock="Bottom" Padding="16" Margin="0,0,0,16">
+                    <TextBlock Text="TDD • MVVM • NUnit" Foreground="{StaticResource TextSecondaryBrush}"
+                               FontSize="10" HorizontalAlignment="Center"/>
+                </Border>
+            </DockPanel>
+        </Border>
+
+        <!-- Main Content -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Header -->
+            <Border Padding="28,20" BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,0,1">
+                <Grid>
+                    <TextBlock Text="{Binding CurrentPageTitle}" Style="{StaticResource PageTitle}"/>
+                    <TextBlock Text="Bird Aviary Management" HorizontalAlignment="Right"
+                               Foreground="{StaticResource TextSecondaryBrush}" FontSize="12"
+                               VerticalAlignment="Center"/>
+                </Grid>
+            </Border>
+
+            <!-- Page Content -->
+            <ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}" Margin="28,20"/>
+        </Grid>
+    </Grid>
+</Window>
