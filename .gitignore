@@ -1,0 +1,12 @@
+bin/
+obj/
+.publish/
+.build-mac-publish/
+publish-mac/
+.vs/
+.vscode/
+.DS_Store
+*.user
+*.suo
+*.zip
+.claude/

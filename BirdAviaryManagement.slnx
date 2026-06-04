@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="BirdAviaryManagement.App/BirdAviaryManagement.App.csproj" />
+  <Project Path="BirdAviaryManagement.Core/BirdAviaryManagement.Core.csproj" />
+  <Project Path="BirdAviaryManagement.Tests/BirdAviaryManagement.Tests.csproj" />
+</Solution>

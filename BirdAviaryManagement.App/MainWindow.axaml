@@ -1,0 +1,472 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="BirdAviaryManagement.App.MainWindow"
+        x:CompileBindings="False"
+        Title="Bird Aviary Management"
+        Width="1240"
+        Height="820"
+        MinWidth="1020"
+        MinHeight="720"
+        Background="#F0F2F5">
+
+    <Window.Styles>
+
+        <Style Selector="TextBox">
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="Foreground" Value="#1E293B"/>
+            <Setter Property="BorderBrush" Value="#CBD5E1"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10,6"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+
+        <Style Selector="ComboBox">
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="Foreground" Value="#1E293B"/>
+            <Setter Property="BorderBrush" Value="#CBD5E1"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10,6"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+
+        <Style Selector="ComboBoxItem">
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="Foreground" Value="#1E293B"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+
+        <Style Selector="DataGrid">
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="Foreground" Value="#1E293B"/>
+            <Setter Property="BorderBrush" Value="#E2E8F0"/>
+        </Style>
+
+        <Style Selector="DataGridRow">
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="Foreground" Value="#334155"/>
+        </Style>
+
+        <Style Selector="DataGridCell">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#334155"/>
+            <Setter Property="Padding" Value="10,6"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+
+        <Style Selector="DataGridColumnHeader">
+            <Setter Property="Background" Value="#F8FAFC"/>
+            <Setter Property="Foreground" Value="#475569"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="10,9"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="BorderBrush" Value="#E2E8F0"/>
+        </Style>
+
+    </Window.Styles>
+
+    <Grid>
+
+        <!-- ── Main layout ── -->
+        <Grid RowDefinitions="Auto,Auto,*,Auto"
+              Margin="20"
+              RowSpacing="14">
+
+            <!-- ────────────── ROW 0 · HEADER ────────────── -->
+            <Border Grid.Row="0"
+                    CornerRadius="12"
+                    Padding="20,16"
+                    Background="#1E293B">
+                <Grid ColumnDefinitions="Auto,*">
+
+                    <!-- Logo mark -->
+                    <Border Grid.Column="0"
+                            Width="44" Height="44"
+                            CornerRadius="10"
+                            Background="#334155"
+                            VerticalAlignment="Center"
+                            Margin="0,0,14,0">
+                        <TextBlock Text="B"
+                                   FontSize="22"
+                                   FontWeight="Bold"
+                                   Foreground="#818CF8"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+                    </Border>
+
+                    <!-- Title / subtitle -->
+                    <StackPanel Grid.Column="1"
+                                Spacing="3"
+                                VerticalAlignment="Center">
+                        <TextBlock Text="Bird Aviary Management"
+                                   FontSize="22"
+                                   FontWeight="Bold"
+                                   Foreground="#F8FAFC"/>
+                        <TextBlock Text="Inventory · Sorting · Reports · Health Service Mocking"
+                                   FontSize="12"
+                                   Foreground="#94A3B8"/>
+                    </StackPanel>
+
+                </Grid>
+            </Border>
+
+            <!-- ────────────── ROW 1 · FORM CARD ────────────── -->
+            <Border Grid.Row="1"
+                    Background="#FFFFFF"
+                    BorderBrush="#E2E8F0"
+                    BorderThickness="1"
+                    CornerRadius="12"
+                    Padding="20">
+
+                <Grid RowDefinitions="Auto,Auto,Auto"
+                      RowSpacing="14">
+
+                    <!-- Section label -->
+                    <StackPanel Grid.Row="0"
+                                Orientation="Horizontal"
+                                Spacing="10">
+                        <Border Width="4" Height="18"
+                                CornerRadius="2"
+                                Background="#4F46E5"
+                                VerticalAlignment="Center"/>
+                        <TextBlock Text="Add / Update Bird"
+                                   FontSize="15"
+                                   FontWeight="SemiBold"
+                                   Foreground="#1E293B"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <!-- Input fields -->
+                    <Grid Grid.Row="1"
+                          ColumnDefinitions="1.1*,1*,1.2*,1*,1*,Auto"
+                          ColumnSpacing="12"
+                          RowDefinitions="Auto,Auto"
+                          RowSpacing="5">
+
+                        <TextBlock Grid.Row="0" Grid.Column="0"
+                                   Text="RING ID"
+                                   FontSize="11" FontWeight="SemiBold" Foreground="#64748B"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1"
+                                   Text="BIRD TYPE"
+                                   FontSize="11" FontWeight="SemiBold" Foreground="#64748B"/>
+                        <TextBlock Grid.Row="0" Grid.Column="2"
+                                   Text="COLOR / MUTATION"
+                                   FontSize="11" FontWeight="SemiBold" Foreground="#64748B"/>
+                        <TextBlock Grid.Row="0" Grid.Column="3"
+                                   Text="HATCH YEAR"
+                                   FontSize="11" FontWeight="SemiBold" Foreground="#64748B"/>
+                        <TextBlock Grid.Row="0" Grid.Column="4"
+                                   Text="STATUS"
+                                   FontSize="11" FontWeight="SemiBold" Foreground="#64748B"/>
+                        <TextBlock Grid.Row="0" Grid.Column="5"
+                                   Text="SALE"
+                                   FontSize="11" FontWeight="SemiBold" Foreground="#64748B"/>
+
+                        <TextBox x:Name="RingIdTextBox"
+                                 Grid.Row="1" Grid.Column="0"
+                                 Height="38"
+                                 PlaceholderText="e.g. 1001"/>
+
+                        <ComboBox x:Name="BirdTypeComboBox"
+                                  Grid.Row="1" Grid.Column="1"
+                                  Height="38"
+                                  SelectedIndex="0">
+                            <ComboBoxItem Content="Budgie"/>
+                            <ComboBoxItem Content="Finch"/>
+                            <ComboBoxItem Content="Cockatiel"/>
+                            <ComboBoxItem Content="Canary"/>
+                            <ComboBoxItem Content="Lovebird"/>
+                        </ComboBox>
+
+                        <TextBox x:Name="ColorMutationTextBox"
+                                 Grid.Row="1" Grid.Column="2"
+                                 Height="38"
+                                 PlaceholderText="Blue / כחול"/>
+
+                        <TextBox x:Name="HatchYearTextBox"
+                                 Grid.Row="1" Grid.Column="3"
+                                 Height="38"
+                                 PlaceholderText="e.g. 2022 (min 2000)"/>
+
+                        <ComboBox x:Name="StatusComboBox"
+                                  Grid.Row="1" Grid.Column="4"
+                                  Height="38"
+                                  SelectedIndex="0">
+                            <ComboBoxItem Content="InAviary"/>
+                            <ComboBoxItem Content="Sold"/>
+                            <ComboBoxItem Content="Quarantine"/>
+                        </ComboBox>
+
+                        <ComboBox x:Name="AvailableForSaleComboBox"
+                                  Grid.Row="1" Grid.Column="5"
+                                  Height="38"
+                                  SelectedIndex="1">
+                            <ComboBoxItem Content="True"/>
+                            <ComboBoxItem Content="False"/>
+                        </ComboBox>
+                    </Grid>
+
+                    <!-- Action buttons -->
+                    <Grid Grid.Row="2"
+                          ColumnDefinitions="*,*,*,*,*"
+                          ColumnSpacing="10">
+
+                        <Button x:Name="AddBirdButton"
+                                Grid.Column="0"
+                                Content="Add Bird"
+                                Height="38"
+                                Background="#4F46E5"
+                                Foreground="White"
+                                FontWeight="SemiBold"
+                                FontSize="13"
+                                CornerRadius="6"
+                                Click="AddBirdButton_Click"/>
+
+                        <Button x:Name="LoadBulkButton"
+                                Grid.Column="1"
+                                Content="Load Bulk 10,000"
+                                Height="38"
+                                Background="#0284C7"
+                                Foreground="White"
+                                FontWeight="SemiBold"
+                                FontSize="13"
+                                CornerRadius="6"
+                                Click="LoadBulkButton_Click"/>
+
+                        <Button x:Name="UpdateSaleButton"
+                                Grid.Column="2"
+                                Content="Check Health For Sale"
+                                Height="38"
+                                Background="#7C3AED"
+                                Foreground="White"
+                                FontWeight="SemiBold"
+                                FontSize="13"
+                                CornerRadius="6"
+                                Click="UpdateSaleButton_Click"/>
+
+                        <Button x:Name="GenerateReportButton"
+                                Grid.Column="3"
+                                Content="Generate Report"
+                                Height="38"
+                                Background="#D97706"
+                                Foreground="White"
+                                FontWeight="SemiBold"
+                                FontSize="13"
+                                CornerRadius="6"
+                                Click="GenerateReportButton_Click"/>
+
+                        <Button x:Name="ClearInventoryButton"
+                                Grid.Column="4"
+                                Content="Clear Bulk"
+                                Height="38"
+                                Background="#64748B"
+                                Foreground="White"
+                                FontWeight="SemiBold"
+                                FontSize="13"
+                                CornerRadius="6"
+                                Click="ClearInventoryButton_Click"/>
+
+                    </Grid>
+                </Grid>
+            </Border>
+
+            <!-- ────────────── ROW 2 · INVENTORY CARD ────────────── -->
+            <Border Grid.Row="2"
+                    Background="#FFFFFF"
+                    BorderBrush="#E2E8F0"
+                    BorderThickness="1"
+                    CornerRadius="12"
+                    Padding="16">
+
+                <Grid RowDefinitions="Auto,*"
+                      RowSpacing="12">
+
+                    <Grid Grid.Row="0"
+                          ColumnDefinitions="*,Auto">
+                        <StackPanel Grid.Column="0"
+                                    Orientation="Horizontal"
+                                    Spacing="10">
+                            <Border Width="4" Height="18"
+                                    CornerRadius="2"
+                                    Background="#4F46E5"
+                                    VerticalAlignment="Center"/>
+                            <TextBlock Text="Bird Inventory"
+                                       FontSize="15"
+                                       FontWeight="SemiBold"
+                                       Foreground="#1E293B"
+                                       VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <TextBlock Grid.Column="1"
+                                   Text="Sorted report appears after Generate Report"
+                                   FontSize="12"
+                                   Foreground="#94A3B8"
+                                   VerticalAlignment="Center"/>
+                    </Grid>
+
+                    <DataGrid x:Name="BirdsDataGrid"
+                              Grid.Row="1"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              GridLinesVisibility="All"
+                              HeadersVisibility="Column"
+                              BorderBrush="#E2E8F0"
+                              BorderThickness="1">
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Ring ID"         Binding="{Binding RingId}"           Width="*"/>
+                            <DataGridTextColumn Header="Type"            Binding="{Binding Type}"             Width="*"/>
+                            <DataGridTextColumn Header="Color / Mutation" Binding="{Binding ColorMutation}"   Width="1.2*"/>
+                            <DataGridTextColumn Header="Hatch Year"      Binding="{Binding HatchYear}"        Width="*"/>
+                            <DataGridTextColumn Header="Status"          Binding="{Binding Status}"           Width="*"/>
+                            <DataGridTextColumn Header="Available" Binding="{Binding AvailableForSaleText}" Width="*"/>
+                        </DataGrid.Columns>
+
+                    </DataGrid>
+                </Grid>
+            </Border>
+
+            <!-- ────────────── ROW 3 · SUMMARY CARD ────────────── -->
+            <Border Grid.Row="3"
+                    Background="#FFFFFF"
+                    BorderBrush="#E2E8F0"
+                    BorderThickness="1"
+                    CornerRadius="12"
+                    Padding="16">
+
+                <Grid ColumnDefinitions="*,Auto"
+                      RowDefinitions="Auto,Auto"
+                      RowSpacing="10">
+
+                    <StackPanel Grid.Row="0" Grid.Column="0"
+                                Orientation="Horizontal"
+                                Spacing="10">
+                        <Border Width="4" Height="18"
+                                CornerRadius="2"
+                                Background="#4F46E5"
+                                VerticalAlignment="Center"/>
+                        <TextBlock Text="Inventory Summary"
+                                   FontSize="15"
+                                   FontWeight="SemiBold"
+                                   Foreground="#1E293B"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <Border Grid.Row="1"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            Background="#F8FAFC"
+                            BorderBrush="#E2E8F0"
+                            BorderThickness="1"
+                            CornerRadius="6"
+                            Padding="12,8">
+                        <TextBlock x:Name="ReportTextBlock"
+                                   Text="Click Generate Report to view inventory summary."
+                                   FontSize="13"
+                                   Foreground="#475569"/>
+                    </Border>
+
+                </Grid>
+            </Border>
+
+        </Grid>
+
+        <!-- ────────────── MODAL OVERLAY ────────────── -->
+        <Grid x:Name="MessageOverlay"
+              IsVisible="False"
+              Background="#80000000">
+
+            <Border HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="460"
+                    MaxWidth="520"
+                    CornerRadius="16"
+                    Background="#FFFFFF"
+                    BorderBrush="#E2E8F0"
+                    BorderThickness="1"
+                    BoxShadow="0 20 60 0 #40000000">
+
+                <Grid RowDefinitions="Auto,Auto,Auto">
+
+                    <!-- Modal header (color set at runtime by ShowMessage) -->
+                    <Border x:Name="PopupHeaderBorder"
+                            Grid.Row="0"
+                            Background="#16A34A"
+                            CornerRadius="16,16,0,0"
+                            Padding="20,16">
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+
+                            <Border Grid.Column="0"
+                                    Width="46" Height="46"
+                                    CornerRadius="23"
+                                    Background="#FFFFFF22"
+                                    VerticalAlignment="Center">
+                                <TextBlock x:Name="PopupIconTextBlock"
+                                           Text="✔"
+                                           FontSize="20"
+                                           FontWeight="Bold"
+                                           Foreground="White"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"/>
+                            </Border>
+
+                            <TextBlock x:Name="PopupTitleTextBlock"
+                                       Grid.Column="1"
+                                       Margin="14,0,0,0"
+                                       Text="Success"
+                                       FontSize="18"
+                                       FontWeight="Bold"
+                                       Foreground="White"
+                                       VerticalAlignment="Center"/>
+
+                            <Button Grid.Column="2"
+                                    x:Name="CloseMessageButtonTop"
+                                    Content="✕"
+                                    Width="34" Height="34"
+                                    FontSize="14"
+                                    Background="#FFFFFF22"
+                                    Foreground="White"
+                                    BorderBrush="Transparent"
+                                    CornerRadius="8"
+                                    Click="CloseMessageButton_Click"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- Modal body -->
+                    <StackPanel Grid.Row="1"
+                                Margin="24,22,24,22">
+                        <TextBlock x:Name="PopupMessageTextBlock"
+                                   Text="Message will appear here."
+                                   FontSize="15"
+                                   TextWrapping="Wrap"
+                                   Foreground="#334155"/>
+                    </StackPanel>
+
+                    <!-- Modal footer -->
+                    <Border Grid.Row="2"
+                            Background="#F8FAFC"
+                            BorderBrush="#E2E8F0"
+                            BorderThickness="0,1,0,0"
+                            CornerRadius="0,0,16,16"
+                            Padding="16,12">
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Right">
+                            <Button x:Name="CloseMessageButton"
+                                    Content="Close"
+                                    Width="110" Height="36"
+                                    Background="#16A34A"
+                                    Foreground="White"
+                                    FontWeight="SemiBold"
+                                    FontSize="13"
+                                    CornerRadius="8"
+                                    Click="CloseMessageButton_Click"/>
+                        </StackPanel>
+                    </Border>
+
+                </Grid>
+            </Border>
+        </Grid>
+
+    </Grid>
+</Window>
