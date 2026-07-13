@@ -3,6 +3,7 @@ using BirdAviaryManagement.Core.Models;
 
 namespace BirdAviaryManagement.Core.Services
 {
+    // Builds inventory statistics and a sorted bird list for the UI report.
     public class ReportService
     {
         private readonly BirdSorter birdSorter = new BirdSorter();
@@ -37,6 +38,7 @@ namespace BirdAviaryManagement.Core.Services
             return count;
         }
 
+        // This method calculates the average age of all birds.
         public double CalculateAverageAge(List<Bird> birds, int currentYear)
         {
             if (birds == null || birds.Count == 0)
@@ -55,6 +57,7 @@ namespace BirdAviaryManagement.Core.Services
             return (double)totalAge / birds.Count;
         }
 
+        // Generates a full inventory report: totals, average age, sale count, and sorted list.
         public InventoryReport CreateInventoryReport(List<Bird> birds, int currentYear)
         {
             List<Bird> safeBirds = birds ?? new List<Bird>();

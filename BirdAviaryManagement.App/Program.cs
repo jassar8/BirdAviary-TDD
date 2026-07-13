@@ -3,6 +3,7 @@ using System;
 
 namespace BirdAviaryManagement.App;
 
+// Application entry point for the Avalonia desktop UI.
 class Program
 {
     // Initialization code. Don't use any Avalonia, third-party APIs or any

@@ -5,9 +5,11 @@ using BirdAviaryManagement.Core.Models;
 
 namespace BirdAviaryManagement.Core.Services
 {
+    // Sorts birds by hatch year in descending order (newest first).
     public class BirdSorter
     {
         /*
+         * Bubble Sort implementation kept for TDD history as required by the assignment.
          * First version - Bubble Sort - O(n^2)
          * This version was implemented first according to the TDD assignment requirements.
          * It is kept here as a comment and not deleted, as required.
@@ -45,8 +47,10 @@ namespace BirdAviaryManagement.Core.Services
          * }
          */
 
+        // Public entry point: measures performance, then runs Merge Sort.
         public List<Bird> SortByHatchYearDescending(List<Bird>? birds)
         {
+            // Performance timer: measures sorting duration in milliseconds.
             Stopwatch stopwatch = Stopwatch.StartNew();
 
             if (birds == null)
@@ -58,6 +62,7 @@ namespace BirdAviaryManagement.Core.Services
 
             List<Bird> sortedBirds = new List<Bird>(birds);
 
+            // Merge Sort implementation used after refactoring for better performance.
             List<Bird> result = MergeSortDescending(sortedBirds);
 
             stopwatch.Stop();
@@ -66,6 +71,7 @@ namespace BirdAviaryManagement.Core.Services
             return result;
         }
 
+        // Merge Sort - O(n log n). Splits the list, sorts each half, then merges.
         private List<Bird> MergeSortDescending(List<Bird> birds)
         {
             if (birds.Count <= 1)
@@ -94,6 +100,7 @@ namespace BirdAviaryManagement.Core.Services
             return MergeDescending(left, right);
         }
 
+        // Merges two already-sorted halves into one list ordered by hatch year descending.
         private List<Bird> MergeDescending(List<Bird> left, List<Bird> right)
         {
             List<Bird> result = new List<Bird>();

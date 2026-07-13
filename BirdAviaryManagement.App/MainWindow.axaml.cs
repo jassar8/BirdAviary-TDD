@@ -7,6 +7,7 @@ using BirdAviaryManagement.Core.Services;
 
 namespace BirdAviaryManagement.App
 {
+    // Main Avalonia window: UI event handlers call Core services and refresh the grid.
     public partial class MainWindow : Window
     {
         private readonly BirdService birdService;
@@ -17,6 +18,7 @@ namespace BirdAviaryManagement.App
         {
             InitializeComponent();
 
+            // Wire UI to Core services (business logic stays outside the view).
             birdService = new BirdService();
             bulkBirdGenerator = new BulkBirdGenerator();
             reportService = new ReportService();
@@ -67,12 +69,14 @@ namespace BirdAviaryManagement.App
             ColorMutationTextBox.CaretIndex = Math.Min(caretIndex, filtered.Length);
         }
 
+        // Validates form input, then asks BirdService to add the bird to inventory.
         private void AddBirdButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             string ringId = (RingIdTextBox.Text ?? string.Empty).Trim();
             string colorMutation = (ColorMutationTextBox.Text ?? string.Empty).Trim();
             string hatchYearText = (HatchYearTextBox.Text ?? string.Empty).Trim();
 
+            // UI-layer validation with clear user messages before calling the service.
             if (string.IsNullOrWhiteSpace(ringId))
             {
                 ShowMessage(
@@ -177,6 +181,7 @@ namespace BirdAviaryManagement.App
             );
         }
 
+        // Generates 10,000 random birds for performance testing and loads them into inventory.
         private void LoadBulkButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             List<Bird> birds = bulkBirdGenerator.GenerateBirds(10000);
@@ -190,7 +195,8 @@ namespace BirdAviaryManagement.App
             );
         }
 
-  private void UpdateSaleButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        // Checks bird status, then calls BirdService which uses IHealthService for approval.
+        private void UpdateSaleButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
 {
     string ringId = (RingIdTextBox.Text ?? string.Empty).Trim();
 
@@ -250,6 +256,7 @@ namespace BirdAviaryManagement.App
 }
 }
 
+        // Builds inventory report (totals, average age, sorted list) and updates the dashboard.
         private void GenerateReportButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             List<Bird> birds = birdService.GetAllBirds();
@@ -267,7 +274,8 @@ namespace BirdAviaryManagement.App
                 true
             );
         }
-   private void ClearInventoryButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        // Clears only bulk-generated birds; manual entries remain in the inventory.
+        private void ClearInventoryButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
 {
     int removedCount = birdService.ClearBulkBirds();
 
@@ -362,7 +370,8 @@ namespace BirdAviaryManagement.App
             AvailableForSaleComboBox.SelectedIndex = 1;
         }
 
-       private void ShowMessage(string message, bool isSuccess)
+        // Shows success (green) or error (red) feedback in the modal overlay.
+        private void ShowMessage(string message, bool isSuccess)
 {
     PopupMessageTextBlock.Text = message;
     MessageOverlay.IsVisible = true;

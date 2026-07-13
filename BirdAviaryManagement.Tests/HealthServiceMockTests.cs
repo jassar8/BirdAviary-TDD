@@ -5,6 +5,7 @@ using BirdAviaryManagement.Core.Services;
 
 namespace BirdAviaryManagement.Tests
 {
+    // Mocking tests: isolate BirdService business logic from the real HealthService.
     [TestClass]
     public class HealthServiceMockTests
     {
@@ -12,6 +13,7 @@ namespace BirdAviaryManagement.Tests
         public void UpdateSaleAvailability_WhenHealthServiceReturnsTrue_ShouldSetBirdAvailableForSale()
         {
             // Arrange
+            // Mocking the health service to isolate the business logic.
             Mock<IHealthService> healthServiceMock = new Mock<IHealthService>();
 
             healthServiceMock

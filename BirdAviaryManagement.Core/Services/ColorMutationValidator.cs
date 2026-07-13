@@ -1,5 +1,6 @@
 namespace BirdAviaryManagement.Core.Services
 {
+    // Validates color/mutation text: English or Hebrew letters (and spaces) only.
     public static class ColorMutationValidator
     {
         public static bool IsValid(string colorMutation)
@@ -25,6 +26,7 @@ namespace BirdAviaryManagement.Core.Services
             return true;
         }
 
+        // Live UI filter: keeps only allowed letters/spaces as the user types.
         public static string FilterInput(string text)
         {
             if (string.IsNullOrEmpty(text))

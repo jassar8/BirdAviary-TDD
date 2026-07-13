@@ -4,6 +4,7 @@ using BirdAviaryManagement.Core.Models;
 
 namespace BirdAviaryManagement.Core.Services
 {
+    // Generates large sets of random birds for performance and bulk-load testing.
     public class BulkBirdGenerator
     {
         private readonly Random random = new Random();
@@ -42,6 +43,7 @@ namespace BirdAviaryManagement.Core.Services
             "אפור"
         };
 
+        // Generates 10,000 random birds for performance testing (or any positive count).
         public List<Bird> GenerateBirds(int count)
         {
             List<Bird> birds = new List<Bird>();
@@ -55,16 +57,16 @@ namespace BirdAviaryManagement.Core.Services
 
             for (int i = 1; i <= count; i++)
             {
-           Bird bird = new Bird
-{
-    RingId = CreateUniqueRingId(i),
-    Type = GetRandomBirdType(),
-    ColorMutation = GetRandomColor(),
-    HatchYear = random.Next(Bird.MinimumHatchYear, currentYear + 1),
-    Status = GetRandomBirdStatus(),
-    IsAvailableForSale = GetRandomBoolean(),
-    IsBulkGenerated = true
-};
+                Bird bird = new Bird
+                {
+                    RingId = CreateUniqueRingId(i),
+                    Type = GetRandomBirdType(),
+                    ColorMutation = GetRandomColor(),
+                    HatchYear = random.Next(Bird.MinimumHatchYear, currentYear + 1),
+                    Status = GetRandomBirdStatus(),
+                    IsAvailableForSale = GetRandomBoolean(),
+                    IsBulkGenerated = true
+                };
 
                 birds.Add(bird);
             }
@@ -72,6 +74,7 @@ namespace BirdAviaryManagement.Core.Services
             return birds;
         }
 
+        // Predictable unique Ring IDs so bulk load never creates duplicates.
         private string CreateUniqueRingId(int index)
         {
             return (900000000L + index).ToString();

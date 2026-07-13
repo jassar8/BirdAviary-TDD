@@ -146,6 +146,7 @@ namespace BirdAviaryManagement.Tests
             Assert.AreEqual(0, result);
         }
 
+        // Unit test verifying average age calculation (currentYear - HatchYear).
         [TestMethod]
         public void CalculateAverageAge_WithValidBirds_ShouldReturnCorrectAverage()
         {

@@ -1,5 +1,6 @@
 namespace BirdAviaryManagement.Core.Services
 {
+    // Validates that Ring IDs contain digits only (no letters or symbols).
     public static class RingIdValidator
     {
         public static bool IsValid(string ringId)
@@ -20,6 +21,7 @@ namespace BirdAviaryManagement.Core.Services
             return true;
         }
 
+        // Live UI filter: strips non-digit characters as the user types.
         public static string FilterInput(string text)
         {
             if (string.IsNullOrEmpty(text))

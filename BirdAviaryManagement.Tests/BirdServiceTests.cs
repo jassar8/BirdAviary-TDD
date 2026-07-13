@@ -32,6 +32,7 @@ namespace BirdAviaryManagement.Tests
             Assert.AreEqual(1, service.GetAllBirds().Count);
         }
 
+        // Unit test verifying duplicate Ring IDs cannot be added.
         [TestMethod]
         public void AddBird_WithDuplicateRingId_ShouldNotAddBird()
         {
